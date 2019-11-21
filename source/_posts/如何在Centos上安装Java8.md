@@ -1,0 +1,26 @@
+---
+title: 如何在Centos上安装Java8
+date: 2019-11-21 16:28:04
+tags:
+---
+
+
+```
+yum search java
+java-1.8.0-openjdk-devel.x86_64
+
+yum -y install java-1.8.0-openjdk-devel.x86_64
+
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.232.b09-0.el7_7.x86_64
+#export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+export PATH=$PATH:$JAVA_HOME/bin
+```
+
+安装 docker 正确姿势
+`sudo yum update`
+`sudo yum remove docker  docker-common docker-selinux docker-engine`
+
+`yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo`
+
+参考： https://segmentfault.com/a/1190000015389941
+参考： https://blog.csdn.net/shadow_zed/article/details/85557922
