@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
-description: ''
+title: dev4mobile's blog 
+subtitle: 'dev4moible'
+description: 'dev4mobile'
 keywords: dev4mobile
 author: dev4mobile 
 language: en
@@ -95,4 +95,6 @@ theme: again
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: ''
+  type: 'git'
+  repo: https://github.com/dev4mobile/dev4mobile.github.io.git
+  branch: master
