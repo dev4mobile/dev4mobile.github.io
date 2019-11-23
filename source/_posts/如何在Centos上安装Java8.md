@@ -1,7 +1,7 @@
 ---
 title: 如何在Centos上安装Java8
 date: 2019-11-21 16:28:04
-tags:
+tags: java
 ---
 
 

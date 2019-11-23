@@ -1,7 +1,7 @@
 ---
 title: 使用 Github Action 搭建 Hexo 博客
 date: 2019-11-21 11:45:56
-tags:
+tags: hexo
 ---
 `HEXO`是常用的博客平台
 ## 搭建过程
