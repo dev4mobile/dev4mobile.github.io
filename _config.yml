@@ -9,7 +9,7 @@ description: 'dev4mobile'
 keywords: dev4mobile
 author: dev4mobile 
 language: en
-timezone: ''
+timezone: 'Asia/Shanghai'
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
