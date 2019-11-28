@@ -24,6 +24,7 @@
     "hexo-renderer-stylus": "^1.1.0",
     "hexo-server": "^1.0.0",
     "markdown-it-emoji": "^1.4.0",
-    "twemoji": "^12.1.4"
+    "twemoji": "^12.1.4",
+    "hexo-generator-sitemap": "^2.0.0"
   }
 }
