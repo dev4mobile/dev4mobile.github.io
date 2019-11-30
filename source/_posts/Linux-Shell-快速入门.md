@@ -35,7 +35,7 @@ tags: shell
   ```
   首先需要给文件 `test.sh` 添加可执行权限，然后执行 `./test.sh` 就可以得到输出结果, 其中的 `.` 是标识在当前目录找可行性程序 `test.sh` 来执行，并且使用定义的 shell bang `#!/bin/bash` 来执行程序
 
-2. 作为解释器参数来执行, 可以使用解释器 `sh`, 或者其它解释器 `bash`, 使用这样的方式来执行程序，其中指定的 `shell bang` 是不生效的的
+2. 作为解释器参数来执行, 可以使用解释器 `sh`, 或者其它解释器 `bash`, 使用这样的方式来执行程序，其中指定的 `shell bang` 是不生效的
   ```bash
     sh test.sh
     bash test.sh
@@ -110,7 +110,7 @@ $PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/u
 ## Shell 表达式
 
 ```
-#复制表达式
+#赋值表达式
 var=5
 #表达式计算
 expr $var + 5 
@@ -172,6 +172,50 @@ for var in `ls -al`;do
 done
 ```
 其中 **\`ls -al\`** 是执行 `ls -al` 命令
+
+* while 循环
+```bash
+#!/bin/bash
+read NUM
+while [ $NUM -lt 10 ]; do
+  echo $NUM
+  NUM=$(($NUM+1))
+done
+```
+条件放在用`[]` 中，注意里面的条件必须左右都有空格，不然解析会报错，另外 `$(())` 里面存放的是算术表达式
+
+* until
+```bash
+#!/bin/bash
+set -e
+Num=0
+until [ $Num -gt 5 ];do
+  echo $Num
+  Num=$[Num+1]
+done
+```
+条件跟while一样，放在 `[]` 里面，另外除了可以使用 `$(())`，也可以使用 `$[]` 里面使用算术表达式
+
+* break 
+```bash
+#!/bin/bash
+for num in 1 2 3;do
+  if test $num -gt 2;then
+    break
+  fi
+  echo $num
+done
+```
+* contine
+```bash
+#!/bin/bash
+for num in 1 2 3;do
+  if test $num -eq 2;then
+    continue
+  fi
+  echo $num
+done
+```
 
 ## Shell 函数
 定义函数有格式
