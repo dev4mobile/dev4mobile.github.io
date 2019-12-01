@@ -30,9 +30,7 @@ go version go1.13 darwin/amd64
 
 ```go
 package main
-
 import "fmt"
-
 func main() {
   fmt.Printf("hello world!")
 }
