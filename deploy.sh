@@ -6,6 +6,8 @@ hexo clean
 
 hexo generate
 
+git submodule update --recursive --remote
+
 git add .
 git save
 git push origin develop -f
