@@ -10,6 +10,7 @@ git add .
 git save
 git push origin develop -f
 
+rm -rf ../public
 mv public/ ..
 
 cd ../public
