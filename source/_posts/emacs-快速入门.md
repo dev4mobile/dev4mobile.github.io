@@ -2,7 +2,7 @@
 ---
 title: emacs 快速入门
 date: 2019-12-08 10:35:38
-tags:
+tags: emacs
 ---
 
 break line: ctrl + e, ctrl + j / ctrl + m
@@ -12,6 +12,8 @@ save file: ctrl + x, ctrl + s
 exit: ctrl + x, k, enter
 
 terminate input: ctrl + g
+
+cut: ctrl + w
 
 copy: alt + w
 
@@ -39,6 +41,19 @@ exit: ctrl + x, ctrl + c
 
 open file: ctrl + x, ctrl + f
 
+revoke: ctrl + x, u
+
+maxium emacs: ctrl + z
+
+down query: ctrl + s
+
+query and replace: alt + %
 
 
+
+
+
+https://dev4mobiles.com
+hello world
+meitian gansha qu ne?
 
