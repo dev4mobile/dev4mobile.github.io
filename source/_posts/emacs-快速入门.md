@@ -12,3 +12,33 @@ save file: ctrl + x, ctrl + s
 exit: ctrl + x, k, enter
 
 terminate input: ctrl + g
+
+copy: alt + w
+
+paste: ctrl + y
+
+cut to end: ctrl + k
+
+delete one character after: ctrl + d
+
+delete one character before: delete
+
+up: ctrl + up
+
+down: ctrl + down
+
+left: ctrl + b
+
+right: ctrl + f
+
+start line: ctrl + a
+
+end line: ctrl + e
+
+exit: ctrl + x, ctrl + c
+
+open file: ctrl + x, ctrl + f
+
+
+
+
