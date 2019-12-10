@@ -2,6 +2,8 @@
 
 set -e
 
+cnpm install
+
 hexo clean
 
 hexo generate
