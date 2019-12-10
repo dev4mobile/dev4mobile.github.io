@@ -25,6 +25,10 @@ delete one character after: ctrl + d
 
 delete one character before: delete
 
+delte one word after: alt + d
+
+delte one word before: alt + del
+
 up: ctrl + up
 
 down: ctrl + down
@@ -49,11 +53,12 @@ down query: ctrl + s
 
 query and replace: alt + %
 
+top: alt + <
+last: alt + >
 
 
-
+emacs 学习指南》》https://wizardmerlin.github.io/posts/ba598705/
 
 https://dev4mobiles.com
 hello world
 meitian gansha qu ne?
-
