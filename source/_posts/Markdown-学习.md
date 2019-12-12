@@ -116,8 +116,7 @@ tags: markdown
 
 ## 总结
 
-本文简单的介绍了 `markdown` 的一些基本用法，如果想要学习更多知识，请访问我的博客[https://dev4mobiles.com]
-
+本文简单的介绍了 `markdown` 的一些基本用法，如果想要学习更多知识，请访问我的博客
 ## 参考：
 
 > https://mdnice.com/
