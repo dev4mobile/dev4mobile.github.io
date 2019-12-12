@@ -16,8 +16,10 @@ tags: clojure
 
 ```clojure
 (ns hello-world.core)
+
 (defn -main [& args]
   (println "Hello world"))
+  
 ```
 
 `lein run`
