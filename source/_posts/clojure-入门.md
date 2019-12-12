@@ -19,3 +19,5 @@ tags: clojure
 (defn -main [& args]
   (println "Hello world"))
 ```
+
+`lein run`
