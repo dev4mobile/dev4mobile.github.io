@@ -2,7 +2,7 @@
 
 set -e
 
-# cnpm install
+cnpm install
 
 hexo clean
 
