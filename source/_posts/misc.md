@@ -11,11 +11,16 @@ tags: misc
 * [Gif 录制](https://getkap.co/)
 
 ## 优秀的学习网站
+
+### misc
+* [techdifference](https://techdifferences.com/)
+* [learnlanguages](https://learnxinyminutes.com/docs/zh-cn/bash-cn/)
 ### 后端开发
 * [Baeldung·Java](https://www.baeldung.com/)
 * [Google 编程风格](https://zh-google-styleguide.readthedocs.io/en/latest/)
 * [GeeksforGeeks](https://www.geeksforgeeks.org/)
 * [mkyong.com](https://www.mkyong.com/)
+
 ### 前端开发
 * https://github.com/lefex/FE
 
