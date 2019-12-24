@@ -17,6 +17,7 @@ tags: misc
 * [learnlanguages](https://learnxinyminutes.com/docs/zh-cn/bash-cn/)
 * [编程思想](https://program-think.blogspot.com/)
 * [Learn](https://github.com/mishadoff)
+* [xerra](https://xeraa.net/)
 ### 后端开发
 * [Baeldung·Java](https://www.baeldung.com/)
 * [Google 编程风格](https://zh-google-styleguide.readthedocs.io/en/latest/)
