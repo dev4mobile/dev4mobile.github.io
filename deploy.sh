@@ -23,7 +23,7 @@ git init
 
 git save
 
-git remote add origin https://git.coding.net/Dev4mobile/dev4mobile.git
+git remote add origin git@e.coding.net:Dev4mobile-01/dev4mobile.git
 
 git push -u origin master -f
 
