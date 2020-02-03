@@ -36,3 +36,13 @@ https://kevinjiang.info/2016/03/08/%E4%BD%BF%E7%94%A8Clojure%E5%BC%80%E5%8F%91We
 [月光博客](https://www.williamlong.info/archives/5429.html)
 
 [clojure 学习]https://liujiacai.net/blog/2019/04/21/experience-in-clojure/
+
+
+mac 软件如何安装
+
+
+https://apple.stackexchange.com/questions/266080/cant-open-application-from-unidentified-developer
+
+sudo spctl --master-disable
+
+sudo xattr -d com.apple.quarantine /Applications/SizeUp.app
