@@ -6,6 +6,7 @@ tags: misc
 
 ## 常用网址
 * [SM.MS 免费图床](https://sm.ms/)
+* [imchr 图床](https://imgchr.com/)
 * [微信公众号排版](https://mdnice.com/)
 * [微信公众平台](https://mp.weixin.qq.com/cgi-bin/home?t=home/index&lang=zh_CN&token=1917103461)
 * [Gif 录制](https://getkap.co/)
