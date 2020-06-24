@@ -9,7 +9,7 @@ jobs:
       with:
         submodules: recursive
     - name: Build and Deploy
-      uses: renzhaosy/hexo-deploy-action@master
+      uses: ApolloZhu/hexo-deploy-action@master
       env:
         PERSONAL_TOKEN: ${{ secrets.GH_TOKEN }}
         PUBLISH_REPOSITORY: dev4mobile/dev4mobile.github.io # The repository the action should deploy to.
