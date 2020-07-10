@@ -1,5 +1,5 @@
 ---
-title: Brew 安装 
+title: Brew 用法 
 date: 2020-07-10 17:07:47
 tags:
 ---
