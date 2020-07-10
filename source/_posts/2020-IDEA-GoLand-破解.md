@@ -11,4 +11,3 @@ tags: tool
 4. 解压破解密钥zip包，然后进入lib目录，将`jetbrains-agent.jar` 拖进安装的IDEA，会弹出一个对话框，使用默认选择即可，并继续下一步，重启软件
 5. 验证：help -> register， 可以查看过期时间
    
-
