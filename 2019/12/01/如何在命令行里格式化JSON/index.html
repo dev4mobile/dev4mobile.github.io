@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>如何在命令行里格式化JSON | dev4mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+<link rel="stylesheet" href="/css/app.css">
+
+  <!-- <link rel='stylesheet' href='http://fonts.useso.com/css?family=Source+Code+Pro'> -->
+  
+
+  <!-- adsense-->
+  <script data-ad-client="ca-pub-5161456307079685" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">
+    </script>
+
+  <!-- google analytic-->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-139070704-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <nav class="app-nav">
+  
+    
+      <a href="/.">home</a>
+    
+  
+    
+      <a href="/archives">archive</a>
+    
+  
+</nav>
+
+  <main class="post">
+  <article>
+  <h1 class="article-title">
+    <a href="/2019/12/01/%E5%A6%82%E4%BD%95%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%87%8C%E6%A0%BC%E5%BC%8F%E5%8C%96JSON/">如何在命令行里格式化JSON</a>
+  </h1>
+
+  <section class="article-meta">
+    <p class="article-date">December 01 2019</p>
+  </section>
+
+  <section class="article-entry">
+    <p>身为一名软件工程师，我们经常需要在命令行里面优雅的显示 <code>JSON</code>，那么如何做呢？</p>
+<p>有两种比较简单的方式可以从命令行漂亮的打印 <code>JSON</code> 字符串，第一种使用python，另外一种就是使用 <code>jq</code> 命令。</p>
+<p><img src="https://i.loli.net/2019/12/01/ZpXtrfE4NkgOeDm.png" alt="Screen Shot 2019-12-01 at 14.18.36.png"></p>
+<h2>使用 python</h2>
+<p>用法：
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input | python -mjson.tool</span><br></pre></td></tr></table></figure>
+<code>input</code> 作为json输入流，经过管道，最后使用 <code>python -mjson.tool</code> 处理</p>
+<p>Example 1:
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'&#123;"perso":&#123;"name": "dev4mobile"&#125;&#125;'</span> | python -mjson.tool</span><br></pre></td></tr></table></figure>
+Output:</p>
+<p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"perso"</span>: &#123;</span><br><span class="line">        <span class="attr">"name"</span>: <span class="string">"dev4mobile"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+Example 2:</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1:8080 | python -mjson.tool</span><br></pre></td></tr></table></figure>
+Output:</p>
+<p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"timestamp"</span>: <span class="string">"2019-12-01T06:01:46.993+0000"</span>,</span><br><span class="line">    <span class="attr">"status"</span>: <span class="number">404</span>,</span><br><span class="line">    <span class="attr">"error"</span>: <span class="string">"Not Found"</span>,</span><br><span class="line">    <span class="attr">"message"</span>: <span class="string">"No message available"</span>,</span><br><span class="line">    <span class="attr">"path"</span>: <span class="string">"/"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+上边是常用的两个例子</p>
+<h2>使用 jq 命令</h2>
+<p>安装 <code>jq</code></p>
+<ol>
+<li>mac os 平台
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install jq</span><br></pre></td></tr></table></figure></li>
+<li>Ubuntu 平台<br>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install jq</span><br></pre></td></tr></table></figure>
+用法：</li>
+</ol>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input | jq .</span><br></pre></td></tr></table></figure>
+<code>jq</code> 后面的 <code>.</code> 是代表整个input 对象，所以<code>jq .</code>就是格式化整个 <code>JSON</code> 串</p>
+<p>Example 1
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'&#123;"perso":&#123;"name": "dev4mobile"&#125;&#125;'</span> | jq .</span><br></pre></td></tr></table></figure>
+Output:</p>
+<p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"perso"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"dev4mobile"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+Example 2</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://127.0.0.1:8080 | jq .</span><br></pre></td></tr></table></figure>
+Output:</p>
+<p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"timestamp"</span>: <span class="string">"2019-12-01T06:12:19.838+0000"</span>,</span><br><span class="line">  <span class="attr">"status"</span>: <span class="number">404</span>,</span><br><span class="line">  <span class="attr">"error"</span>: <span class="string">"Not Found"</span>,</span><br><span class="line">  <span class="attr">"message"</span>: <span class="string">"No message available"</span>,</span><br><span class="line">  <span class="attr">"path"</span>: <span class="string">"/"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+  </section>
+</article>
+
+  <div class="sharing grid">
+  <section class="profile grid-item grid">
+    <img class="avatar" src="/images/avatar.png" alt="avatar" />
+    <div class="grid-item">
+      <p class="title"> dev4mobile </p>
+      <p class="subtitle"> Coding is my life </p>
+    <div>
+  </section>
+
+  <section class="share-btns">
+    <!-- <p> share it if you like it~ </p> -->
+    <a
+  class="twitter-share-button"
+  data-size="large"
+  data-via="DrakeLeung"
+  href="https://twitter.com/intent/tweet?text=身为一名软件工程师，我们经常需要在命令行"
+>
+  Tweet
+</a>
+
+<script>
+  window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  js.async = true;
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+</script>
+
+  </section>
+</div>
+
+
+  
+    
+<section class="article-comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+<script>
+  var disqus_shortname = 'dev4mobile';
+  
+  var disqus_url = 'http://dev4mobiles.com/2019/12/01/%E5%A6%82%E4%BD%95%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%87%8C%E6%A0%BC%E5%BC%8F%E5%8C%96JSON/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+  
+</main>
+
+</body>
+</html>

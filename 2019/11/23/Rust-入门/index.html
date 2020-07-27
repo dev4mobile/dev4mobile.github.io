@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Rust 入门 | dev4mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+<link rel="stylesheet" href="/css/app.css">
+
+  <!-- <link rel='stylesheet' href='http://fonts.useso.com/css?family=Source+Code+Pro'> -->
+  
+
+  <!-- adsense-->
+  <script data-ad-client="ca-pub-5161456307079685" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">
+    </script>
+
+  <!-- google analytic-->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-139070704-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <nav class="app-nav">
+  
+    
+      <a href="/.">home</a>
+    
+  
+    
+      <a href="/archives">archive</a>
+    
+  
+</nav>
+
+  <main class="post">
+  <article>
+  <h1 class="article-title">
+    <a href="/2019/11/23/Rust-%E5%85%A5%E9%97%A8/">Rust 入门</a>
+  </h1>
+
+  <section class="article-meta">
+    <p class="article-date">November 23 2019</p>
+  </section>
+
+  <section class="article-entry">
+    <p>这是<code>Rust</code>入门第一课，我们要学会安装<code>rust</code>，编译一个<code>rust</code>文件，还有如何升级<code>rust</code>工具链</p>
+<h2>工具安装</h2>
+<h3>下载</h3>
+<ol>
+<li>适合任何平台
+<code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code></li>
+<li><code>mac os</code> 平台
+推荐使用<code>brew install rust</code>来安装</li>
+</ol>
+<h3>验证下载是否成功</h3>
+<p><code>rustc --version</code>返回版本信息，则说明<code>rust</code>安装成功</p>
+<h2>工具介绍</h2>
+<h3>rustc 简介</h3>
+<p><code>rust</code>编译器，负责处理，编译，链接<code>rust</code>语言源文件，比如说，要编译<code>file.rs</code>文件，可以使用命令<code>rustc file.rs</code></p>
+<h3>rustup 简介</h3>
+<p><code>rust</code>工具链安装器，负责安装，管理和更新rust工具链，比如说，要更新所有工具链, 也就是说升级rust，可以使用命令 <code>rustup update</code></p>
+<h3>cargo 简介</h3>
+<p><code>rust</code>包管理器，负责管理<code>rust</code>工程和他们的<code>module</code>依赖，这是是我们学习最常用的一个工具，我们来看看这个命令包含哪些参数</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ cargo</span><br><span class="line">Rust&#39;s package manager</span><br><span class="line"></span><br><span class="line">USAGE:</span><br><span class="line">    cargo [OPTIONS] [SUBCOMMAND]</span><br><span class="line"></span><br><span class="line">OPTIONS:</span><br><span class="line">    -V, --version           Print version info and exit</span><br><span class="line">        --list              List installed commands</span><br><span class="line">        --explain &lt;CODE&gt;    Run &#96;rustc --explain CODE&#96;</span><br><span class="line">    -v, --verbose           Use verbose output (-vv very verbose&#x2F;build.rs output)</span><br><span class="line">    -q, --quiet             No output printed to stdout</span><br><span class="line">        --color &lt;WHEN&gt;      Coloring: auto, always, never</span><br><span class="line">        --frozen            Require Cargo.lock and cache are up to date</span><br><span class="line">        --locked            Require Cargo.lock is up to date</span><br><span class="line">        --offline           Run without accessing the network</span><br><span class="line">    -Z &lt;FLAG&gt;...            Unstable (nightly-only) flags to Cargo, see &#39;cargo -Z help&#39; for details</span><br><span class="line">    -h, --help              Prints help information</span><br><span class="line"></span><br><span class="line">Some common cargo commands are (see all commands with --list):</span><br><span class="line">    build       Compile the current package</span><br><span class="line">    check       Analyze the current package and report errors, but don&#39;t build object files</span><br><span class="line">    clean       Remove the target directory</span><br><span class="line">    doc         Build this package&#39;s and its dependencies&#39; documentation</span><br><span class="line">    new         Create a new cargo package</span><br><span class="line">    init        Create a new cargo package in an existing directory</span><br><span class="line">    run         Run a binary or example of the local package</span><br><span class="line">    test        Run the tests</span><br><span class="line">    bench       Run the benchmarks</span><br><span class="line">    update      Update dependencies listed in Cargo.lock</span><br><span class="line">    search      Search registry for crates</span><br><span class="line">    publish     Package and upload this package to the registry</span><br><span class="line">    install     Install a Rust binary. Default location is $HOME&#x2F;.cargo&#x2F;bin</span><br><span class="line">    uninstall   Uninstall a Rust binary</span><br></pre></td></tr></table></figure></p>
+<h2>实战</h2>
+<h3>创建一个工程</h3>
+<p>下面的命令是创建一个<code>hello</code>的工程，--bin指明创建一个二进制文件,是binary的缩写
+<code>cargo new hello --bin</code></p>
+<h3>编写源码</h3>
+<p>在目录<code>hello</code>下创建文件 <code>hello.rs</code></p>
+<p><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">  <span class="built_in">println!</span>(<span class="string">"hello world"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3>运行</h3>
+<p>下面的命令是运行一个<code>rust</code>工程
+<code>cargo run</code></p>
+<h2>总结</h2>
+<p>我们学会了如何利用<code>cargo</code>工具创建一个工程，编译源码，其实原理就是<code>cargo</code>编译源码时调用了<code>rustc</code>工具</p>
+
+  </section>
+</article>
+
+  <div class="sharing grid">
+  <section class="profile grid-item grid">
+    <img class="avatar" src="/images/avatar.png" alt="avatar" />
+    <div class="grid-item">
+      <p class="title"> dev4mobile </p>
+      <p class="subtitle"> Coding is my life </p>
+    <div>
+  </section>
+
+  <section class="share-btns">
+    <!-- <p> share it if you like it~ </p> -->
+    <a
+  class="twitter-share-button"
+  data-size="large"
+  data-via="DrakeLeung"
+  href="https://twitter.com/intent/tweet?text=这是<code>Rust</code>入"
+>
+  Tweet
+</a>
+
+<script>
+  window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  js.async = true;
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+</script>
+
+  </section>
+</div>
+
+
+  
+    
+<section class="article-comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+<script>
+  var disqus_shortname = 'dev4mobile';
+  
+  var disqus_url = 'http://dev4mobiles.com/2019/11/23/Rust-%E5%85%A5%E9%97%A8/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+  
+</main>
+
+</body>
+</html>

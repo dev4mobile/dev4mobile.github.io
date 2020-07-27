@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Lua 基础入门 | dev4mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+<link rel="stylesheet" href="/css/app.css">
+
+  <!-- <link rel='stylesheet' href='http://fonts.useso.com/css?family=Source+Code+Pro'> -->
+  
+
+  <!-- adsense-->
+  <script data-ad-client="ca-pub-5161456307079685" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">
+    </script>
+
+  <!-- google analytic-->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-139070704-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <nav class="app-nav">
+  
+    
+      <a href="/.">home</a>
+    
+  
+    
+      <a href="/archives">archive</a>
+    
+  
+</nav>
+
+  <main class="post">
+  <article>
+  <h1 class="article-title">
+    <a href="/2019/11/28/Lua-%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/">Lua 基础入门</a>
+  </h1>
+
+  <section class="article-meta">
+    <p class="article-date">November 28 2019</p>
+  </section>
+
+  <section class="article-entry">
+    <h1>学习 Lua 的必要性</h1>
+<p>因为工作中经常与 <code>nginx</code> 打交道，而 <code>nginx</code> 又有大量的模块是由 <code>Lua</code> 写的，所以有必要学习下 <code>Lua</code> 基础的语法知识。<code>Lua</code> 作为一门动态脚本语言，解释执行，和 <code>JavaScript</code> 有点相似。</p>
+<h2>语言特点</h2>
+<ol>
+<li>语句结束没有分号</li>
+<li>跟 <code>JavaScript</code> 很像</li>
+<li>默认定义的是全局变量，定义局部变量需要加 <code>local</code> 关键字</li>
+<li>数组索引从1开始</li>
+<li>没有 <code>i++</code> 操作符号，只能 <code>i = i + 1</code></li>
+</ol>
+<h2>注释</h2>
+<ol>
+<li>单行注释<br>
+<code>--</code> 注释内容</li>
+<li>多行注释
+<code>--[[</code>
+注释内容
+<code>]]--</code></li>
+</ol>
+<h2>内置数据类型</h2>
+<p>总共有6种内置数据类型， 其中包括nil, boolean, number, string, table, function</p>
+<ol>
+<li>
+<p><code>nil</code>
+通常是没有赋值，直接使用才会是这个值, 比如说下面的代码直接打印 变量 <code>name</code>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(name)</span><br></pre></td></tr></table></figure>
+在 <code>ifelse</code> 判断语句中，nil 被当成false 分支，但 <code>nil ~= false</code>, 在 Lua 语言当中，不等于使用 <code>~=</code> 来表示, 而不是我们常见的 <code>!=</code> 。</p>
+</li>
+<li>
+<p><code>boolean</code>
+有两种取值：true, false</p>
+</li>
+<li>
+<p><code>number</code>
+所有的数值类型都使用 <code>number</code> 来表示，不管是整数，还是浮点数，其实内部的存储方式是双精度类型。</p>
+</li>
+<li>
+<p><code>string</code>
+字符串可以用双引号，也可以用单引号包围起来，特殊字符需要转义
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">"dev4mobile"</span></span><br><span class="line">name = <span class="string">'dev4mobile'</span></span><br><span class="line">nameWithAge = <span class="string">'dev4mobile \n 25'</span></span><br></pre></td></tr></table></figure>
+多行字符串
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">welcome = <span class="string">[[</span></span><br><span class="line"><span class="string">  hello world</span></span><br><span class="line"><span class="string">]]</span></span><br></pre></td></tr></table></figure></p>
+</li>
+<li>
+<p><code>table</code>
+其实就是其它语言里面的对象， 有两种表现方式，一种是数组，一种是字典(Map)，
+都是使用大括号括起来的。记住数组索引从1开始。
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arr = &#123; <span class="number">1</span>, <span class="string">"dev4mobile"</span>, <span class="string">'cn.dev4mobile@gamil.com'</span>, <span class="number">12.3</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span>endv&#125;</span><br><span class="line">person = &#123; name = <span class="string">'dev4mobile'</span> &#125;</span><br></pre></td></tr></table></figure></p>
+</li>
+<li>
+<p><code>function</code>
+定义如下，以 <code>function</code>关键字作为开头，<code>add</code> 是函数名字
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 一般定义</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">(a, b)</span></span></span><br><span class="line">   <span class="keyword">return</span> a + b</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-- 传递多个参数</span></span><br><span class="line">funcation <span class="built_in">print</span>(...)</span><br><span class="line">  <span class="built_in">print</span>(...)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-- 返回多个参数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">"abc"</span>, <span class="number">12</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+</li>
+</ol>
+<h2>控制流语句</h2>
+<ol>
+<li>循环
+循环有3种写法，for， while，repeat .. until
+说明： <code>#变量名</code> 表示读取变量的长度，可以是字符串和数组
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- for 循环</span></span><br><span class="line">	arr = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span> &#125;</span><br><span class="line">	<span class="keyword">for</span> i=<span class="number">1</span>, #arr <span class="keyword">do</span>  <span class="comment">-- 索引从1开始</span></span><br><span class="line">	  <span class="built_in">print</span>(arr[i])</span><br><span class="line">	<span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- while 循环</span></span><br><span class="line">  arr = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span> &#125;</span><br><span class="line">  i = <span class="number">1</span></span><br><span class="line">  <span class="keyword">while</span> i &lt;= #arr <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(arr[i])</span><br><span class="line">    i = i + <span class="number">1</span></span><br><span class="line">  <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- repeate until 循环</span></span><br><span class="line">arr = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span> &#125;</span><br><span class="line">i = <span class="number">1</span></span><br><span class="line"><span class="keyword">repeat</span></span><br><span class="line">		<span class="built_in">print</span>(arr[i])</span><br><span class="line">		i = i + <span class="number">1</span></span><br><span class="line"><span class="keyword">until</span> i &gt;= #arr</span><br></pre></td></tr></table></figure></li>
+<li>分支	( ifelse )
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">"dev4mobile"</span></span><br><span class="line"><span class="keyword">if</span> #name &gt; <span class="number">10</span> <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"name length = "</span>.. #name)</span><br><span class="line"><span class="keyword">elseif</span> #name &gt;<span class="number">5</span> <span class="keyword">then</span></span><br><span class="line">   <span class="built_in">print</span>(<span class="string">"name length &gt; 5, real length = "</span>..#name)    <span class="comment">-- 两个点..代表字符串?</span></span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line">  <span class="built_in">print</span>(<span class="string">"name length &lt; "</span>..#name)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2>面向对象</h2>
+<p>实现原理：有点类似 <code>JavaScript</code> 的实现使用原型方式，使用<code>函数 + table</code> 实现。</p>
+<ul>
+<li>模块
+在写demo之前有必要先介绍下模块的概念，一般来说一个文件就是一个模块，跟 <code>JavaScript</code> 一样， 导入模块关键字 <code>require</code>, 导出模块关键字<code>return</code>
+下面我们来新建一个模块名
+首先新建一个文件名： perosn.lua，输入下面代码
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 定义模块</span></span><br><span class="line"><span class="comment">-- 解释器</span></span><br><span class="line">#!/usr/<span class="keyword">local</span>/bin/lua</span><br><span class="line"><span class="keyword">local</span> Person = &#123;&#125;</span><br><span class="line"><span class="comment">-- 导出模块名，类似JavaScript中的export</span></span><br><span class="line"><span class="keyword">return</span> Person</span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 导入模块</span></span><br><span class="line"><span class="comment">-- 解释器</span></span><br><span class="line">#!/usr/<span class="keyword">local</span>/bin/lua</span><br><span class="line"><span class="keyword">local</span> perosn = <span class="built_in">require</span>(<span class="string">'person'</span>)</span><br></pre></td></tr></table></figure></li>
+<li>构造对象
+首先新建一个文件名： perosn.lua，输入下面代码
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 定义模块</span></span><br><span class="line"><span class="comment">-- 解释器</span></span><br><span class="line">#!/usr/<span class="keyword">local</span>/bin/lua</span><br><span class="line"><span class="keyword">local</span> Person = &#123;&#125;</span><br><span class="line"><span class="comment">-- 定义构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person:new</span><span class="params">(name, age)</span></span></span><br><span class="line">   <span class="comment">-- __index 指向 父类 table</span></span><br><span class="line">   <span class="comment">-- setmetatable 关联了 新创建的对象 &#123; name = name, age = age &#125; 与 Person 对象</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">setmetatable</span>(&#123; name = name, age = age &#125;, &#123; <span class="built_in">__index</span> = Person &#125;)</span><br><span class="line"> <span class="keyword">end</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person:toString</span><span class="params">()</span></span> </span><br><span class="line">	<span class="built_in">print</span>(<span class="string">'name='</span>..self.name..<span class="string">', age='</span>..self.age)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-- 导出模块名，类似JavaScript中的export</span></span><br><span class="line"><span class="keyword">return</span> Person</span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 导入模块</span></span><br><span class="line"><span class="comment">-- 解释器</span></span><br><span class="line">#!/usr/<span class="keyword">local</span>/bin/lua</span><br><span class="line"><span class="keyword">local</span> Perosn = <span class="built_in">require</span>(<span class="string">'person'</span>)</span><br><span class="line"><span class="comment">-- 调用构造函数</span></span><br><span class="line"><span class="keyword">local</span> person = Person:new(<span class="string">"dev4mobile"</span>, <span class="number">21</span>)</span><br><span class="line"><span class="comment">-- 调用对象的toString方法, 这个方法是父类方法，需要我们setmetatable来绑定，也就是我们定义对象时 setmetatable(&#123; name = name, age = age &#125;, &#123; __index = Person &#125;) 来绑定的</span></span><br><span class="line">person.toString()</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+  </section>
+</article>
+
+  <div class="sharing grid">
+  <section class="profile grid-item grid">
+    <img class="avatar" src="/images/avatar.png" alt="avatar" />
+    <div class="grid-item">
+      <p class="title"> dev4mobile </p>
+      <p class="subtitle"> Coding is my life </p>
+    <div>
+  </section>
+
+  <section class="share-btns">
+    <!-- <p> share it if you like it~ </p> -->
+    <a
+  class="twitter-share-button"
+  data-size="large"
+  data-via="DrakeLeung"
+  href="https://twitter.com/intent/tweet?text=>学习 Lua 的必要性</h1>
+<p"
+>
+  Tweet
+</a>
+
+<script>
+  window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  js.async = true;
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+</script>
+
+  </section>
+</div>
+
+
+  
+    
+<section class="article-comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+<script>
+  var disqus_shortname = 'dev4mobile';
+  
+  var disqus_url = 'http://dev4mobiles.com/2019/11/28/Lua-%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+  
+</main>
+
+</body>
+</html>

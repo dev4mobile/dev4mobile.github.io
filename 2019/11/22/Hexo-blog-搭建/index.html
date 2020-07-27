@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>使用 Github Action 搭建 Hexo 博客 | dev4mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+<link rel="stylesheet" href="/css/app.css">
+
+  <!-- <link rel='stylesheet' href='http://fonts.useso.com/css?family=Source+Code+Pro'> -->
+  
+
+  <!-- adsense-->
+  <script data-ad-client="ca-pub-5161456307079685" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">
+    </script>
+
+  <!-- google analytic-->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-139070704-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <nav class="app-nav">
+  
+    
+      <a href="/.">home</a>
+    
+  
+    
+      <a href="/archives">archive</a>
+    
+  
+</nav>
+
+  <main class="post">
+  <article>
+  <h1 class="article-title">
+    <a href="/2019/11/22/Hexo-blog-%E6%90%AD%E5%BB%BA/">使用 Github Action 搭建 Hexo 博客</a>
+  </h1>
+
+  <section class="article-meta">
+    <p class="article-date">November 22 2019</p>
+  </section>
+
+  <section class="article-entry">
+    <p><code>Hexo</code> 是使用 <code>nodejs</code> 写的博客框架，使用 <code>Markdown</code> 引擎来解析文章，在几秒内，即可生成绚丽的主题生成静态网页。作为一名有追求的程序员，我们必须得有自己的个人网站，所以我要开始搭建自己的博客了，于是开始了我选择博客平台之旅，最终选择了 <code>Hexo</code> 。我为什么选择 <code>Hexo</code> 搭建我的博客，其中最主要原因是国内程序员使用广泛，可选择的主题也很多，还有最重要的可迁移性强。</p>
+<p>这是我的个人博客效果：<a href="https://dev4mobiles.com/">IT才华有限青年·dev4mobile</a></p>
+<h2>原理</h2>
+<p>我们可以通过命令 <code>hexo init xxx</code> 来生成 hexo 网站源码，然后通过 <code>hexo generate</code> 来编译源码，生成我们需要的静态文件，这些静态文件在 <code>public</code>目录下, 这个 <code>public</code> 目录就是我们要发布的网站目录。下面是我简单的画了一下 hexo 网站的运行原理
+<img src="https://dev4mobiles.com/images/hexo-blog-website-run.jpg" alt="运行原理图"></p>
+<h2>搭建过程</h2>
+<h3>软件准备</h3>
+<p>这里只选择 mac 平台做说明，其它平台请 google</p>
+<ol>
+<li>安装 nodejs
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#搜索 node 是否存在</span></span><br><span class="line">brew search node</span><br><span class="line"><span class="comment">#安装 node </span></span><br><span class="line">brew install node</span><br></pre></td></tr></table></figure></li>
+<li>安装 cnpm
+这里不用 cnpm 也行，使用 nodejs 自带的npm，只不过速度非常慢
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install cnpm -g</span><br></pre></td></tr></table></figure></li>
+<li>安装 hexo-cli
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install hexo-cli -g 或者 npm install hexo-cli -g</span><br></pre></td></tr></table></figure></li>
+<li>安装git
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install git</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3>初始化 blog</h3>
+<p>搭建一个博客需要四步，初始化博客目录，安装博客依赖，本地发布，测试。记住目录名不能错,<code>&lt;github_user_name&gt;.github.io</code>，这里以我的 github 用户名 <code>dev4mobile</code> 为例，必须为<code>dev4mobile.github.io</code>, 我的博客目录结构
+<img src="https://dev4mobiles.com/images/hexo-blog-website-dir.png" alt="网站目录结构"></p>
+<ol>
+<li>
+<p>初始化博客目录结构</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#hexo init &lt;github_user_name&gt;.github.io</span></span><br><span class="line">hexo init dev4mobile.github.io</span><br></pre></td></tr></table></figure></p>
+</li>
+<li>
+<p>安装依赖</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> dev4mobile.github.io</span><br><span class="line">cnpm install</span><br></pre></td></tr></table></figure></p>
+</li>
+<li>
+<p>本地发布</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure></p>
+</li>
+<li>
+<p>测试</p>
+<p><code>hexo server</code> 执行完之后，命令行会打印 <code>http://localhost:4000</code>，这个地址就是我们本地访问的博客地址，能打开说明，我们的网站初步搭建成功。</p>
+</li>
+</ol>
+<h3>新建新 blog</h3>
+<p>网站初步搭建成功之后，我们就可以开始写我们的博客了</p>
+<p>执行下面命令，我们就可以新建一个博客</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#新建blog</span></span><br><span class="line">hexo new <span class="string">'文章名称'</span></span><br><span class="line"><span class="comment">#本地预览</span></span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure></p>
+<h3>发布 blog 到 github 上</h3>
+<p>本地测试都没问题了，那么我们可以使用免费的 VPS 空间 github pages 来发布我们的博客。我这里是使用<code>develop</code> 分支来存放我的网站源码，<code>master</code> 分支作为我的网站发布目录，整个构建过程是使用github actions来做的，配置文件可以参考我写的，我假设你已经有了github账户，在这里以我的账户 dev4mobile 为例来说明.</p>
+<ol>
+<li>
+<p>新建仓库 <code>dev4mobile.github.io</code></p>
+</li>
+<li>
+<p>创建 github action配置文件，也就是在网站目录下新建.github 目录, 然后新建 workflows 目录，创建配置文件 deploy.yml 文件，可参考 https://github.com/dev4mobile/dev4mobile.github.io/blob/develop/.github/workflows/deploy.yml</p>
+</li>
+<li>
+<p>将本地创建的 hexo 网站推送到 <code>dev4mobile.github.io</code> 仓库的 develop 分支, 然后github action 会自动编译，部署到你的 master 分支上</p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin develop -f</span><br></pre></td></tr></table></figure></p>
+</li>
+<li>
+<p>查看 github actions 构建是否成功，成功之后你就可以使用 <code>https://dev4mobile.github.io/</code> 来访问你的网站了</p>
+</li>
+</ol>
+<h3>配置域名</h3>
+<p>如果你自己已经有个人域名，那么你可以配置一条CNAME记录来指向你的 <code>https://dev4mobile.github.io/</code> 的记录。并且需要在你的网站目录 <code>source</code> 目录下创建一个文件<code>CNAME</code>，里面的内容是你的网站，比如我的是<code>dev4mobiles.com</code></p>
+<h3>更改主题</h3>
+<p>默认的主题实在太难看了，我选择 <code>again</code> 这个主题，把主题下载下来放在 <code>themes</code> 目录下，然后在 <code>_config.xml</code> 目录配置 <code>theme</code>这个key为 <code>again</code>就行了</p>
+<h3>总结</h3>
+<p>最后我想说的是，博客不在于有多漂亮，关键是要多写，多输出，这样才能有进步，还有更多的详细过程请参考hexo 官方文档，如果有问题也可以在 <code>twiter</code> 上给我留言</p>
+<h3>参考:</h3>
+<blockquote>
+<p><a href="https://hexo.io/" target="_blank" rel="noopener">Hexo 官方网站</a><br>
+<a href="http://www.ruanyifeng.com/blog/2019/09/getting-started-with-github-actions.html" target="_blank" rel="noopener">Github Actions 入门</a></p>
+</blockquote>
+
+  </section>
+</article>
+
+  <div class="sharing grid">
+  <section class="profile grid-item grid">
+    <img class="avatar" src="/images/avatar.png" alt="avatar" />
+    <div class="grid-item">
+      <p class="title"> dev4mobile </p>
+      <p class="subtitle"> Coding is my life </p>
+    <div>
+  </section>
+
+  <section class="share-btns">
+    <!-- <p> share it if you like it~ </p> -->
+    <a
+  class="twitter-share-button"
+  data-size="large"
+  data-via="DrakeLeung"
+  href="https://twitter.com/intent/tweet?text=<code>Hexo</code> 是使"
+>
+  Tweet
+</a>
+
+<script>
+  window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  js.async = true;
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+</script>
+
+  </section>
+</div>
+
+
+  
+    
+<section class="article-comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+<script>
+  var disqus_shortname = 'dev4mobile';
+  
+  var disqus_url = 'http://dev4mobiles.com/2019/11/22/Hexo-blog-%E6%90%AD%E5%BB%BA/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+  
+</main>
+
+</body>
+</html>

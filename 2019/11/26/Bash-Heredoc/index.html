@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Bash Heredoc | dev4mobile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+<link rel="stylesheet" href="/css/app.css">
+
+  <!-- <link rel='stylesheet' href='http://fonts.useso.com/css?family=Source+Code+Pro'> -->
+  
+
+  <!-- adsense-->
+  <script data-ad-client="ca-pub-5161456307079685" async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">
+    </script>
+
+  <!-- google analytic-->
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-139070704-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+  <nav class="app-nav">
+  
+    
+      <a href="/.">home</a>
+    
+  
+    
+      <a href="/archives">archive</a>
+    
+  
+</nav>
+
+  <main class="post">
+  <article>
+  <h1 class="article-title">
+    <a href="/2019/11/26/Bash-Heredoc/">Bash Heredoc</a>
+  </h1>
+
+  <section class="article-meta">
+    <p class="article-date">November 26 2019</p>
+  </section>
+
+  <section class="article-entry">
+    <p>当写 <code>shell scripts</code> 时, 你可能会传递多行文本或代码块给交互式命令，比如 <code>cat</code>, <code>tee</code>, <code>sftp</code>。
+<code>Heredoc</code> 是一种重定向类型，它允许你可以传递多行数据给到你当前输入的命令。
+<code>Heredoc</code> 语法格式：
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">command</span>] &lt;&lt;[-] [<span class="string">'DELIMITER'</span> | DELIMITER]</span><br><span class="line">  HERE-DOCUMENT</span><br><span class="line">DELIMITER</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>第一行是以可选命令开始，紧接着是重定向符号 <code>&lt;&lt;</code>, 可选 <code>-</code> 和 带引号的界定标识符号 或不带引号的标识符
+<ul>
+<li>你可以使用任何字符串作为分隔符，我们最常用的是 <code>EOF</code> 或者 <code>END</code></li>
+<li>如果使用未带引号的 <code>DELIMITER</code>, 那么传递给命令的 <code>HERE-DOCUMENT</code> 内容里面的 SHELL 变量会被替换掉, 当然可以使用 <code>\${}</code> 来解决</li>
+<li><code>&lt;&lt;</code> 后面添加 <code>-</code>, 将会导致以 <strong>tab</strong> 缩进的代码会被忽略掉，其它符号，比如空格不会被忽略掉</li>
+<li><code>HERE-DOCUMENT</code> 块里面可以包含命令，变量和任何其它类型的输入</li>
+<li>最后一行必须是不带引号的 <code>DELIMITER</code></li>
+</ul>
+</li>
+</ul>
+<h2><code>Heredoc</code> 基本用法</h2>
+<p>我将使用 <code>cat</code> 作为命令作为演示如何使用 <code>Heredoc</code>。</p>
+<p>下面的 <code>Example</code>里面， 我向 <code>HERE-DOCUMENT</code> 内容块里面传递了环境变量 <code>PWD</code> 和 执行命令 <code>whoami</code>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; EOF</span><br><span class="line">  The current directory is: <span class="variable">$PWD</span></span><br><span class="line">  You are logged <span class="keyword">in</span> as: $(whoami)</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+从下面的输出可以看出，环境变量 <code>PWD</code> 和 <code>whoami</code> 被替换掉了</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">The current directory is: /root</span><br><span class="line">You are logged <span class="keyword">in</span> as: root</span><br></pre></td></tr></table></figure>
+如果我们在开始处的 <code>DELIMITER</code> 使用单引号或双引号, 那么结果又是怎样的？</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; <span class="string">'EOF'</span></span><br><span class="line">  The current directory is: <span class="variable">$PWD</span></span><br><span class="line">  You are logged <span class="keyword">in</span> as: $(whoami)</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+结果是环境变量和命令都没有被替换掉</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Output:</span><br><span class="line">  The current directory is: <span class="variable">$PWD</span></span><br><span class="line">  You are logged <span class="keyword">in</span> as: $(whoami)</span><br></pre></td></tr></table></figure></p>
+<p>如果 <code>Heredoc</code> 使用 <code>-</code>, 那么 <code>HERE-DOCUMENT</code> 块里面的缩进将被移除。
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; EOF</span><br><span class="line">  The current directory is: <span class="variable">$PWD</span></span><br><span class="line">  You are logged <span class="keyword">in</span> as: $(whoami)</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Output:</span><br><span class="line">The current directory is: <span class="variable">$PWD</span></span><br><span class="line">You are logged <span class="keyword">in</span> as: $(whoami)</span><br></pre></td></tr></table></figure></p>
+<p>如果不想在命令行显示，那么可以使用 <code>&gt;</code> 或者 <code>&gt;&gt;</code> 重定向</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; EOF &gt; test.txt</span><br><span class="line">The current directory is: <span class="variable">$PWD</span></span><br><span class="line">You are logged <span class="keyword">in</span> as: $(whoami)</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<code>test.txt</code> 的内容如下所示， 当使用 <code>&gt;</code> 文件将会被重写， 如果是 <code>&gt;&gt;</code>, 内容会被添加到文件后面
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@panda ~]<span class="comment"># cat test.txt</span></span><br><span class="line">The current directory is: /root</span><br><span class="line">You are logged <span class="keyword">in</span> as: root</span><br></pre></td></tr></table></figure></p>
+<p><code>heredoc</code> 的输入也会被管道化，下面的例子是使用 <code>sed</code> 处理 <code>heredoc</code> 的内容， 实现的是将所有 <code>l</code> 字母替换为 <code>e</code>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; EOF | sed <span class="string">'s/l/e/g'</span></span><br><span class="line">Hello</span><br><span class="line">World</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+结果为：</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Output:</span><br><span class="line">Heeeo</span><br><span class="line">Wored</span><br></pre></td></tr></table></figure>
+
+同样可以将管道里面的内容写入文件</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat &lt;&lt; EOF | sed <span class="string">'s/l/e/g'</span> &gt; test.txt</span><br><span class="line">Hello</span><br><span class="line">World</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
+<h2>SSH 连接使用 <code>Heredoc</code></h2>
+<p>通过 <code>ssh</code> 远程执行多行命令，我们也可以使用 <code>Heredoc</code>。
+比如 使用 ssh 连接远程的机器，-T 选项是不开启 tty, 这样执行完就断开连接了</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh -T cdh.remote &lt;&lt; <span class="string">'EOF'</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"The current local working directory is: <span class="variable">$PWD</span>"</span></span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+结果：
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The current remote working directory is: /root</span><br></pre></td></tr></table></figure></p>
+<h2>总结</h2>
+<p>我们已经学会了如何在 <code>SHELL</code> 脚本里面如何使用 <code>heredoc</code>, 大家有什么问题，可以给我留言。</p>
+
+  </section>
+</article>
+
+  <div class="sharing grid">
+  <section class="profile grid-item grid">
+    <img class="avatar" src="/images/avatar.png" alt="avatar" />
+    <div class="grid-item">
+      <p class="title"> dev4mobile </p>
+      <p class="subtitle"> Coding is my life </p>
+    <div>
+  </section>
+
+  <section class="share-btns">
+    <!-- <p> share it if you like it~ </p> -->
+    <a
+  class="twitter-share-button"
+  data-size="large"
+  data-via="DrakeLeung"
+  href="https://twitter.com/intent/tweet?text=当写 <code>shell scrip"
+>
+  Tweet
+</a>
+
+<script>
+  window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  js.async = true;
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));
+</script>
+
+  </section>
+</div>
+
+
+  
+    
+<section class="article-comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+<script>
+  var disqus_shortname = 'dev4mobile';
+  
+  var disqus_url = 'http://dev4mobiles.com/2019/11/26/Bash-Heredoc/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+  
+</main>
+
+</body>
+</html>
